@@ -1,5 +1,7 @@
 package com.android.xproject;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 /**
  * Created by Jose on 1/30/2017.
  */
@@ -7,21 +9,22 @@ package com.android.xproject;
 public class EventModel {
 
 
-    public static String date;
-    public static String description;
-    public static String name;
-    public static String photoUrl;
-    public static String location;
-    public static String media;
-    public static String mediaUrl;
+    public String date;
+    public String description;
+    public String name;
+    public String photo;
+//    public String location;
+    public String media;
 
-    public EventModel(String date, String description, String name, String photoUrl, String location, String media, String mediaUrl) {
+
+    public EventModel() { }
+
+    public EventModel(String date, String description, String name, String photoUrl, String media) {
         this.date = date;
         this.description = description;
         this.name = name;
-        this.photoUrl = photoUrl;
-        this.location = location;
+        this.photo = photoUrl;
+//        this.location = location;
         this.media = media;
-        this.mediaUrl = mediaUrl;
     }
 }

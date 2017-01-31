@@ -1,5 +1,7 @@
 package com.android.xproject;
 
+import android.content.Context;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,20 +33,18 @@ public class EventListActivity extends AppCompatActivity {
 
     private DatabaseReference rootRef;
     private DatabaseReference categoryRef;
+    private ImageView eventImageUrl;
 
     private TextView categoryNameTextView;
+//    private String photoUrl = "https://firebasestorage.googleapis.com/v0/b/my-awesome-project-f3c97.appspot.com/o/raceTrack.jpg?alt=media&token=2dcb437f-bafa-4fa7-b885-9df16c27b426";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
 
-        rootRef = FirebaseDatabase.getInstance().getReference();
+        rootRef = FirebaseDatabase.getInstance().getReference().child("Categories");
 
-        initRecyclerView();
-    }
-
-    private void initRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
@@ -51,19 +52,34 @@ public class EventListActivity extends AppCompatActivity {
         categoryName = getIntent().getStringExtra(CATEGORY_NAME);
         Log.d(TAG, "initRecyclerView: CATEGORY_NAME: " + categoryName);
 
+        eventImageUrl = (ImageView) findViewById(R.id.eventImageUrl);
+
         categoryNameTextView = (TextView) findViewById(R.id.categoryNameTextView);
         categoryNameTextView.setText(categoryName);
-        categoryRef = rootRef.child(categoryName); // Music
+        categoryRef = rootRef.child(categoryName); // ex. Music
+        DatabaseReference eventRef = categoryRef.child("0");
+
+        Log.d(TAG, "onCreate: EVENTREF" + eventRef);
+
+        eventRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                EventModel model = dataSnapshot.getValue(EventModel.class);
+                String photoUrl = model.photo;
+                Log.d(TAG, "onDataChange: " + photoUrl);
+                Picasso.with(getApplicationContext())
+                        .load(model.photo)
+                        .into(eventImageUrl);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
-//    public static class ViewHolder extends RecyclerView.ViewHolder {
-//        public ImageView eventImage;
-//        public TextView eventName;
-//
-//        public ViewHolder(View itemView) {
-//            super(itemView);
-//            eventName = (TextView) itemView.findViewById(R.id.eventName);
-//            eventImage = (ImageView) itemView.findViewById(R.id.eventImage);
-//        }
-//    }
 }
