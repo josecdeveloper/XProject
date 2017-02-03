@@ -154,19 +154,20 @@ public class MainActivity extends AppCompatActivity {
                             viewHolder.eventNameTV.setText(name);
                             Picasso.with(getApplicationContext())
                                     .load(image)
+//                                    .placeholder(R.drawable.ic_photo_placeholder)
                                     .into(viewHolder.eventImageIV);
                             viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     Intent eventDetails = new Intent(getApplicationContext(), EventDetailActivity.class);
-                                    eventDetails.putExtra("event_name", name);
-                                    eventDetails.putExtra("event_start", start);
-                                    eventDetails.putExtra("event_image", image);
-                                    eventDetails.putExtra("event_end", end);
-                                    eventDetails.putExtra("event_address", address);
-                                    eventDetails.putExtra("event_date", date);
-                                    eventDetails.putExtra("event_description", description);
-                                    eventDetails.putExtra("event_price", price);
+                                    eventDetails.putExtra(EventDetailActivity.EVENT_NAME, name);
+                                    eventDetails.putExtra(EventDetailActivity.EVENT_START, start);
+                                    eventDetails.putExtra(EventDetailActivity.EVENT_IMAGE, image);
+                                    eventDetails.putExtra(EventDetailActivity.EVENT_END, end);
+                                    eventDetails.putExtra(EventDetailActivity.EVENT_ADDRESS, address);
+                                    eventDetails.putExtra(EventDetailActivity.EVENT_DATE, date);
+                                    eventDetails.putExtra(EventDetailActivity.EVENT_DESCRIPTION, description);
+                                    eventDetails.putExtra(EventDetailActivity.EVENT_PRICE, price);
                                     startActivity(eventDetails);
 
 

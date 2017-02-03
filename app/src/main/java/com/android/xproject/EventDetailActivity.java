@@ -30,17 +30,26 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView eventDescriptionTV;
     private ImageView eventImageIV;
 
+    public static final String EVENT_NAME = "event_name";
+    public static final String EVENT_DATE = "event_date";
+    public static final String EVENT_DESCRIPTION = "event_description";
+    public static final String EVENT_START = "event_start";
+    public static final String EVENT_IMAGE = "event_image";
+    public static final String EVENT_PRICE = "event_price";
+    public static final String EVENT_END = "event_end";
+    public static final String EVENT_ADDRESS = "event_address";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
 
-        String eventName = (String) getIntent().getExtras().get("event_name");
-        String eventDate = (String) getIntent().getExtras().get("event_date");
-        String eventStart = (String) getIntent().getExtras().get("event_start");
-        String eventImage = (String) getIntent().getExtras().get("event_image");
-        String eventDescription = (String) getIntent().getExtras().get("event_description");
-        String eventPrice = (String) getIntent().getExtras().get("event_price");
+        String eventName = (String) getIntent().getExtras().get(EVENT_NAME);
+        String eventDate = (String) getIntent().getExtras().get(EVENT_DATE);
+        String eventStart = (String) getIntent().getExtras().get(EVENT_START);
+        String eventImage = (String) getIntent().getExtras().get(EVENT_IMAGE);
+        String eventDescription = (String) getIntent().getExtras().get(EVENT_DESCRIPTION);
+        String eventPrice = (String) getIntent().getExtras().get(EVENT_PRICE);
 
 
         eventDescriptionTV = (TextView) findViewById(R.id.eventDescriptionDetail);
@@ -49,6 +58,7 @@ public class EventDetailActivity extends AppCompatActivity {
         eventDescriptionTV.setText(eventDescription);
         Picasso.with(this)
                 .load(eventImage)
+                .placeholder(R.drawable.ic_photo_placeholder)
                 .into(eventImageIV);
 
         getSupportActionBar().setTitle(eventName);
